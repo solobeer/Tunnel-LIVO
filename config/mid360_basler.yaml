@@ -1,0 +1,92 @@
+feature_extract_enable : 0
+point_filter_num : 2
+max_iteration : 8
+dense_map_enable : 1
+filter_size_surf : 0.15
+filter_size_map : 0.3
+cube_side_length : 20
+debug : 0
+grid_size : 2
+patch_size : 8
+img_enable : 1
+lidar_enable : 1
+outlier_threshold : 78 # 78 100 156 300
+ncc_en: false
+ncc_thre: 100
+img_point_cov : 1000 # 1000
+laser_point_cov : 0.001 # 0.001
+pose_output_en: false
+delta_time: 0.0
+
+laserMapping:
+    cam_fx: 740.31565
+    cam_fy: 743.34632
+    cam_cx: 332.295425
+    cam_cy: 285.989265
+# cam_fx: 1480.6313
+# cam_fy: 1486.69264
+# cam_cx: 664.59085
+# cam_cy: 571.97853
+
+fusion: #与退化相关参数
+    n_uninformative: 25 #判断退化方向的阈值
+    grad_min: 4  #选取点的梯度阈值，小于不加入地图
+    area_patch_size: 5
+    n_features: 16 #每次加入全局地图的最大数
+    num_per_grid: 10  #每个网格加入全局地图点的最大数，这里是为了弱化网格的概念
+    lambda: 100
+    img_scale: 1
+    debug: false
+    show_submap: false
+    add_submap_num: 40  #视觉子图的最大点数
+
+filter:
+    filter_min: [-15, -9, -15, 1]
+    filter_max: [15, 8.5, 15, 1]
+    # filter_min: [-100, -50, -100, 1]
+    # filter_max: [100, 50, 100, 1]
+
+common:
+    lid_topic:  "/livox/lidar"
+    imu_topic:  "/livox/imu"
+
+preprocess:
+    lidar_type: 1 # 1:Livox LiDAR  2:VELO16  3:OUST64  4:XT32  5:Mid360
+    scan_line: 4 # 16  64  32
+    blind: 1 # blind x m disable
+
+mapping:
+    acc_cov_scale: 100
+    gyr_cov_scale: 10000
+    fov_degree:    360
+    extrinsic_T: [ -0.011, -0.02329, 0.04412 ] # horizon 0.05512, 0.02226, -0.0297 # mid360 -0.011, -0.02329, 0.04412 # avia 0.04165, 0.02326, -0.0284 
+    extrinsic_R: [ 1, 0, 0,
+                   0, 1, 0,
+                   0, 0, 1]
+pcd_save:
+    pcd_save_en: false
+
+camera:
+    # img_topic: /usb_cam/image_raw
+    # img_topic:  /camera/image_color
+    # img_topic: /pylon_camera_node/image_raw/compressed
+    img_topic: /pylon_camera_node/image_raw
+    #xiyuan
+    #楼梯数据
+    # 相机到雷达坐标系变换矩阵
+    Rcl: [-0.0112732,-0.999928,0.00401036,
+         0.0483494,-0.00455101,-0.99882,
+          0.998767,-0.011066,0.0483972]
+    Pcl: [0.0403913, 0.0405194, 0.000818176]
+    #车库数据
+    # Rcl: [-0.00229987,-0.999861,-0.0164879,
+    #      0.0190492,0.0164411,-0.999683,
+    #       0.999816,-0.00261322,0.0190087]
+    # Pcl: [0.143151, 0.216025, 0.0430752]
+
+
+    # Rcl: [0.00162756,-0.999991,0.00390957,
+    #      -0.0126748,-0.00392989,-0.999912,
+    #       0.999918,0.00157786,-0.012681]
+    # Pcl: [0.0409257, 0.0318424, -0.0927219]
+    
